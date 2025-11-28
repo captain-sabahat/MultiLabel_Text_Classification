@@ -1,0 +1,67 @@
+# config.yaml
+mlflow:
+  tracking_uri: "mlruns"
+  experiment_name: "MultiLabel_Text_Classification"
+  artifact_location: "./mlruns/artifacts"
+
+data:
+  dataset_name: "go_emotions"
+  max_length: 100
+  train_size: 10000
+  val_size: 2000
+  test_size: 2000
+
+preprocessing:
+  lowercase: true
+  remove_urls: true
+  remove_special_chars: true
+
+embeddings:
+  Word2Vec:
+    enabled: true
+    vector_size: 100
+    window: 5
+    min_count: 2
+    sg: 1
+    workers: 4
+    epochs: 10
+  
+  GloVe:
+    enabled: true
+    vector_size: 100
+    window: 5
+    min_count: 2
+    sg: 0
+    workers: 4
+    epochs: 10
+  
+  FastText:
+    enabled: true
+    vector_size: 100
+    window: 5
+    min_count: 2
+    sg: 1
+    workers: 4
+    epochs: 10
+  
+  BERT:
+    enabled: true
+    model_name: "bert-base-uncased"
+    max_length: 100
+
+neural_network:
+  layers: [100, 256, 128, 28]  # Input (dense_embedding_dim) -> hidden -> hidden -> output (num_labels)
+  activation: "relu"
+  dropout: 0.5
+  batch_norm: true
+
+training:
+  num_epochs: 10
+  batch_size: 32
+  learning_rate: 0.001
+  optimizer: "adam"
+  loss_function: "BCEWithLogitsLoss"
+  early_stopping_patience: 3
+
+device: "cuda"
+random_seed: 42
